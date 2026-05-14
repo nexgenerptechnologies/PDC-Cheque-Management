@@ -6,5 +6,6 @@
  "module": "PDC Cheque Management",
  "name": "PDC Outstanding Statement",
  "owner": "Administrator",
+ "ref_doctype": "PDC Cheque",
  "report_type": "Script Report"
 }
