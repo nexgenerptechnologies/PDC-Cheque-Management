@@ -1,6 +1,6 @@
 import frappe
 from frappe.model.document import Document
-from frappe.utils import today, getdate, flt, format_currency
+from frappe.utils import today, getdate, flt
 
 class PDCCheque(Document):
     def validate(self):
