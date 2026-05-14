@@ -41,7 +41,20 @@
  "module": "PDC Cheque Management",
  "name": "PDC Invoice Detail",
  "owner": "Administrator",
- "permissions": [],
+ "permissions": [
+  {
+   "read": 1,
+   "role": "System Manager"
+  },
+  {
+   "read": 1,
+   "role": "Accountant"
+  },
+  {
+   "read": 1,
+   "role": "Accounts Manager"
+  }
+ ],
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": []

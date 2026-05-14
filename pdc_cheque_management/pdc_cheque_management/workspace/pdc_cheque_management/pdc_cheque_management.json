@@ -10,10 +10,21 @@
  "label": "PDC Cheque Management",
  "links": [
   {
+   "label": "PDC Documents",
+   "link_type": "DocType",
+   "type": "Header"
+  },
+  {
    "label": "PDC Cheque",
    "link_to": "PDC Cheque",
    "link_type": "DocType",
+   "onboard": 1,
    "type": "Link"
+  },
+  {
+   "label": "Tools",
+   "link_type": "DocType",
+   "type": "Header"
   },
   {
    "label": "PDC Clearance Tool",
@@ -22,13 +33,18 @@
    "type": "Link"
   },
   {
+   "label": "Reports",
+   "link_type": "DocType",
+   "type": "Header"
+  },
+  {
    "label": "PDC Outstanding Statement",
    "link_to": "PDC Outstanding Statement",
    "link_type": "Report",
    "type": "Link"
   }
  ],
- "modified": "2026-05-14 23:30:00.000000",
+ "modified": "2026-05-14 23:55:00.000000",
  "modified_by": "Administrator",
  "module": "PDC Cheque Management",
  "name": "PDC Cheque Management",
@@ -36,5 +52,58 @@
  "parent_page": "",
  "public": 1,
  "roles": [],
- "shortcuts": []
+ "shortcuts": [
+  {
+   "label": "New PDC Cheque",
+   "link_to": "PDC Cheque",
+   "type": "DocType"
+  },
+  {
+   "label": "PDC Clearance Tool",
+   "link_to": "pdc-clearance-tool",
+   "type": "Page"
+  },
+  {
+   "label": "Outstanding Report",
+   "link_to": "PDC Outstanding Statement",
+   "type": "Report"
+  }
+ ],
+ "cards": [
+  {
+   "label": "PDC Transactions",
+   "links": [
+    {
+     "label": "PDC Cheque",
+     "link_to": "PDC Cheque",
+     "link_type": "DocType"
+    },
+    {
+     "label": "PDC Invoice Detail",
+     "link_to": "PDC Invoice Detail",
+     "link_type": "DocType"
+    }
+   ]
+  },
+  {
+   "label": "Tools & Banking",
+   "links": [
+    {
+     "label": "PDC Clearance Tool",
+     "link_to": "pdc-clearance-tool",
+     "link_type": "Page"
+    }
+   ]
+  },
+  {
+   "label": "Reports & Analytics",
+   "links": [
+    {
+     "label": "PDC Outstanding Statement",
+     "link_to": "PDC Outstanding Statement",
+     "link_type": "Report"
+    }
+   ]
+  }
+ ]
 }
