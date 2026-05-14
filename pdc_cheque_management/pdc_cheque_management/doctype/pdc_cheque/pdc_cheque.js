@@ -69,37 +69,52 @@ frappe.ui.form.on('PDC Cheque', {
     },
 
     get_outstanding_invoices: function(frm) {
+        // First, get the Customer's Receivable Account for this company
         frappe.call({
-            method: "erpnext.accounts.doctype.payment_entry.payment_entry.get_outstanding_reference_documents",
+            method: "erpnext.accounts.utils.get_party_account",
             args: {
-                args: {
-                    "posting_date": frm.doc.cheque_date || frappe.datetime.get_today(),
-                    "company": frm.doc.company,
-                    "party_type": "Customer",
-                    "party": frm.doc.customer,
-                    "bank_account": frm.doc.holding_account,
-                    "received_amount": frm.doc.amount,
-                    "payment_type": "Receive"
-                }
+                company: frm.doc.company,
+                party_type: "Customer",
+                party: frm.doc.customer
             },
-            callback: function(r) {
-                if (r.message) {
-                    frm.clear_table("custom_invoices");
-                    let total_allocated = 0;
-                    let cheque_amount = frm.doc.amount;
-
-                    r.message.forEach(d => {
-                        if (total_allocated < cheque_amount) {
-                            let amount_to_allocate = Math.min(d.outstanding_amount, cheque_amount - total_allocated);
-                            let row = frm.add_child("custom_invoices");
-                            row.sales_invoice = d.voucher_no;
-                            row.outstanding_amount = d.outstanding_amount;
-                            row.allocated_amount = amount_to_allocate;
-                            total_allocated += amount_to_allocate;
+            callback: function(res) {
+                let party_account = res.message;
+                
+                // Now call the original method with the account included
+                frappe.call({
+                    method: "erpnext.accounts.doctype.payment_entry.payment_entry.get_outstanding_reference_documents",
+                    args: {
+                        args: {
+                            "posting_date": frm.doc.cheque_date || frappe.datetime.get_today(),
+                            "company": frm.doc.company,
+                            "account": party_account,
+                            "party_type": "Customer",
+                            "party": frm.doc.customer,
+                            "bank_account": frm.doc.holding_account,
+                            "received_amount": frm.doc.amount,
+                            "payment_type": "Receive"
                         }
-                    });
-                    frm.refresh_field("custom_invoices");
-                }
+                    },
+                    callback: function(r) {
+                        if (r.message) {
+                            frm.clear_table("custom_invoices");
+                            let total_allocated = 0;
+                            let cheque_amount = frm.doc.amount;
+
+                            r.message.forEach(d => {
+                                if (total_allocated < cheque_amount) {
+                                    let amount_to_allocate = Math.min(d.outstanding_amount, cheque_amount - total_allocated);
+                                    let row = frm.add_child("custom_invoices");
+                                    row.sales_invoice = d.voucher_no;
+                                    row.outstanding_amount = d.outstanding_amount;
+                                    row.allocated_amount = amount_to_allocate;
+                                    total_allocated += amount_to_allocate;
+                                }
+                            });
+                            frm.refresh_field("custom_invoices");
+                        }
+                    }
+                });
             }
         });
     }
