@@ -1,0 +1,42 @@
+/* Premium Styling for PDC Cheque Management */
+
+.frappe-control[data-fieldname="status"] .control-value {
+    font-weight: bold;
+    padding: 2px 8px;
+    border-radius: 4px;
+}
+
+/* Status Colors */
+[data-status="Draft"] { color: #6c757d; background-color: #f8f9fa; }
+[data-status="Received"] { color: #007bff; background-color: #e7f1ff; }
+[data-status="Deposited"] { color: #fd7e14; background-color: #fff3e6; }
+[data-status="Cleared"] { color: #28a745; background-color: #e9f7ef; }
+[data-status="Bounced"] { color: #dc3545; background-color: #fbe9eb; }
+[data-status="Cancelled"] { color: #6c757d; background-color: #f8f9fa; }
+
+/* Custom Button Styling */
+.btn-info {
+    background-color: #17a2b8 !important;
+    border-color: #17a2b8 !important;
+    color: white !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+.btn-info:hover {
+    background-color: #138496 !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+}
+
+.grid-heading-row {
+    background-color: #f8f9fa !important;
+    font-weight: 600;
+}
+
+.form-section-heading {
+    color: #495057;
+    border-bottom: 2px solid #e9ecef;
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+}
