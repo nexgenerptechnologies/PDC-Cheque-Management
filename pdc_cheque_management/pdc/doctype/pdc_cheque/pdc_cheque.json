@@ -217,7 +217,9 @@
    "write": 1
   }
  ],
+ "search_fields": "customer,cheque_no",
  "sort_field": "modified",
  "sort_order": "DESC",
- "states": []
+ "states": [],
+ "title_field": "cheque_no"
 }
