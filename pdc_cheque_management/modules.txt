@@ -1,1 +1,1 @@
-PDC Cheque Management
+pdc_cheque_management
