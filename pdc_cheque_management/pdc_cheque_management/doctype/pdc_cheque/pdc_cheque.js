@@ -13,11 +13,11 @@ frappe.ui.form.on('PDC Cheque', {
             };
         });
 
-        // Get Outstanding Invoices Button
+        // Add button ABOVE Invoices Table
         if (frm.doc.customer && frm.doc.amount && (!frm.doc.status || ['Draft', 'Received'].includes(frm.doc.status))) {
-            frm.add_custom_button(__('Get Outstanding Invoices'), () => {
+            frm.fields_dict.custom_invoices.grid.add_custom_button(__('Get Outstanding Invoices'), () => {
                 frm.events.get_outstanding_invoices(frm);
-            }, __('Actions')).addClass('btn-info');
+            });
         }
 
         let s = frm.doc.status;
@@ -69,13 +69,12 @@ frappe.ui.form.on('PDC Cheque', {
     },
 
     get_outstanding_invoices: function(frm) {
-        // First, get the Customer's Receivable Account for this company
+        // First, get the Customer's Receivable Account using our new whitelisted wrapper
         frappe.call({
-            method: "erpnext.accounts.utils.get_party_account",
+            method: "pdc_cheque_management.pdc_cheque_management.api.get_customer_account",
             args: {
                 company: frm.doc.company,
-                party_type: "Customer",
-                party: frm.doc.customer
+                customer: frm.doc.customer
             },
             callback: function(res) {
                 let party_account = res.message;

@@ -40,3 +40,8 @@ def clear_pdc(pdc_id, clearance_date):
         doc.save(ignore_permissions=True)
         return {"status": "success", "message": f"Cheque {pdc_id} marked as Cleared."}
     return {"status": "error", "message": "Cheque is not in Deposited status."}
+
+@frappe.whitelist()
+def get_customer_account(company, customer):
+    from erpnext.accounts.party import get_party_account
+    return get_party_account("Customer", customer, company)
