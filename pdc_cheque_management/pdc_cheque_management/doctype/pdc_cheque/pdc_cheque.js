@@ -35,15 +35,17 @@ frappe.ui.form.on('PDC Cheque', {
                 });
             }).addClass('btn-danger');
         } 
-        else if (s === 'Deposited') {
-            frm.add_custom_button('Mark as Cleared', () => {
-                if (!frm.doc.custom_clearance_date) {
-                    frappe.msgprint(__("Please enter the <b>Clearance Date</b> first."));
-                    return;
-                }
-                frm.set_value('status', 'Cleared');
-                frm.save();
-            }).addClass('btn-success');
+        else if (s === 'Deposited' || s === 'Cleared') {
+            if (s === 'Deposited') {
+                frm.add_custom_button('Mark as Cleared', () => {
+                    if (!frm.doc.custom_clearance_date) {
+                        frappe.msgprint(__("Please enter the <b>Clearance Date</b> first."));
+                        return;
+                    }
+                    frm.set_value('status', 'Cleared');
+                    frm.save();
+                }).addClass('btn-success');
+            }
 
             frm.add_custom_button('Mark as Bounced', () => {
                 frappe.prompt([

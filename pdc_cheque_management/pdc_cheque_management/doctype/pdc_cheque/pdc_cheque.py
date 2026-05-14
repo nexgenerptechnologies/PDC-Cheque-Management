@@ -79,6 +79,10 @@ class PDCCheque(Document):
             try:
                 d_je = frappe.get_doc("Journal Entry", self.deposit_journal_entry)
                 if d_je.docstatus == 1:
+                    # Reset clearance date if it was cleared
+                    if d_je.clearance_date:
+                        frappe.db.set_value("Journal Entry", d_je.name, "clearance_date", None)
+                    
                     d_je.cancel()
                     has_cancelled = True
             except: pass
