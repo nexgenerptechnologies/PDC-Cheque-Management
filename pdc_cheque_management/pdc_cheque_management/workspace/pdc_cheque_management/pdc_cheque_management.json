@@ -11,6 +11,7 @@
  "links": [
   {
    "label": "PDC Documents",
+   "link_type": "",
    "type": "Header"
   },
   {
@@ -22,6 +23,7 @@
   },
   {
    "label": "Tools",
+   "link_type": "",
    "type": "Header"
   },
   {
@@ -32,6 +34,7 @@
   },
   {
    "label": "Reports",
+   "link_type": "",
    "type": "Header"
   },
   {
