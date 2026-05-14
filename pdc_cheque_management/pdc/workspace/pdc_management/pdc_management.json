@@ -10,14 +10,38 @@
  "label": "PDC Management",
  "links": [
   {
+   "label": "PDC Documents",
+   "type": "Header"
+  },
+  {
    "label": "PDC Cheque",
    "link_to": "PDC Cheque",
    "link_type": "DocType",
    "onboard": 1,
    "type": "Link"
+  },
+  {
+   "label": "Tools",
+   "type": "Header"
+  },
+  {
+   "label": "PDC Clearance Tool",
+   "link_to": "pdc-clearance-tool",
+   "link_type": "Page",
+   "type": "Link"
+  },
+  {
+   "label": "Reports",
+   "type": "Header"
+  },
+  {
+   "label": "PDC Outstanding Statement",
+   "link_to": "PDC Outstanding Statement",
+   "link_type": "Report",
+   "type": "Link"
   }
  ],
- "modified": "2026-05-14 14:50:00.000000",
+ "modified": "2026-05-14 18:50:00.000000",
  "modified_by": "Administrator",
  "module": "PDC",
  "name": "PDC Management",

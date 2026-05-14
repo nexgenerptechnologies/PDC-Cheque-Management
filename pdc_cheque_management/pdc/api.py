@@ -1,0 +1,42 @@
+import frappe
+import json
+from frappe.utils import flt, getdate
+
+@frappe.whitelist()
+def process_bank_statement(file_url):
+    # In a real scenario, we would parse CSV/Excel from file_url
+    # For this demonstration, we'll assume the user uploaded a file 
+    # and we are extracting rows.
+    
+    # Placeholder: List of deposited PDCs to check against
+    deposited_pdcs = frappe.get_all("PDC Cheque", 
+        filters={"status": "Deposited", "docstatus": 1},
+        fields=["name", "customer", "amount", "cheque_no", "payment_entry", "deposit_journal_entry"]
+    )
+    
+    # Mock data representing what was found in the bank statement
+    # In production, this would come from the uploaded file
+    matches = []
+    for pdc in deposited_pdcs:
+        matches.append({
+            "pdc_id": pdc.name,
+            "customer": pdc.customer,
+            "amount": pdc.amount,
+            "cheque_no": pdc.cheque_no,
+            "payment_entry": pdc.payment_entry,
+            "deposit_journal_entry": pdc.deposit_journal_entry,
+            "status": "Matched",
+            "reason": "Exact amount found in statement"
+        })
+        
+    return matches
+
+@frappe.whitelist()
+def clear_pdc(pdc_id, clearance_date):
+    doc = frappe.get_doc("PDC Cheque", pdc_id)
+    if doc.status == "Deposited":
+        doc.status = "Cleared"
+        doc.custom_clearance_date = clearance_date
+        doc.save(ignore_permissions=True)
+        return {"status": "success", "message": f"Cheque {pdc_id} marked as Cleared."}
+    return {"status": "error", "message": "Cheque is not in Deposited status."}

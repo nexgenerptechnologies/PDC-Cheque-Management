@@ -1,0 +1,144 @@
+<style>
+    .pdc-receipt {
+        padding: 40px;
+        font-family: 'Inter', sans-serif;
+        color: #2c3e50;
+        background: #fff;
+    }
+    .receipt-header {
+        display: flex;
+        justify-content: space-between;
+        border-bottom: 3px solid #3498db;
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+    }
+    .company-logo {
+        max-width: 150px;
+    }
+    .receipt-title {
+        text-align: right;
+    }
+    .receipt-title h1 {
+        margin: 0;
+        color: #3498db;
+        font-size: 28px;
+        text-transform: uppercase;
+    }
+    .receipt-body {
+        line-height: 1.8;
+        font-size: 16px;
+    }
+    .info-row {
+        margin-bottom: 15px;
+    }
+    .label {
+        font-weight: 600;
+        color: #7f8c8d;
+        width: 180px;
+        display: inline-block;
+    }
+    .value {
+        font-weight: 500;
+        border-bottom: 1px dashed #bdc3c7;
+        padding-bottom: 2px;
+    }
+    .amount-box {
+        background: #f7f9f9;
+        border: 1px solid #dcdde1;
+        padding: 20px;
+        margin-top: 30px;
+        border-radius: 8px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .amount-words {
+        font-style: italic;
+        color: #34495e;
+    }
+    .amount-val {
+        font-size: 24px;
+        font-weight: 700;
+        color: #27ae60;
+    }
+    .footer {
+        margin-top: 60px;
+        display: flex;
+        justify-content: space-between;
+    }
+    .signature {
+        width: 200px;
+        border-top: 1px solid #2c3e50;
+        text-align: center;
+        padding-top: 10px;
+        margin-top: 40px;
+    }
+</style>
+
+<div class="pdc-receipt">
+    <div class="receipt-header">
+        <div class="company-info">
+            <h3>{{ doc.company }}</h3>
+        </div>
+        <div class="receipt-title">
+            <h1>PDC Receipt</h1>
+            <p>No: <strong>{{ doc.name }}</strong></p>
+        </div>
+    </div>
+
+    <div class="receipt-body">
+        <p>Received with thanks from <strong>{{ doc.customer }}</strong>,</p>
+        
+        <div class="info-row">
+            <span class="label">Cheque Number:</span>
+            <span class="value">{{ doc.cheque_no }}</span>
+        </div>
+        
+        <div class="info-row">
+            <span class="label">Cheque Date:</span>
+            <span class="value">{{ frappe.utils.formatdate(doc.cheque_date) }}</span>
+        </div>
+
+        <div class="info-row">
+            <span class="label">Bank Name:</span>
+            <span class="value">{{ doc.main_bank_account or "N/A" }}</span>
+        </div>
+
+        <p>Towards the outstanding balance of invoices mentioned below:</p>
+        <table class="table table-bordered" style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+            <thead style="background: #f8f9fa;">
+                <tr>
+                    <th>Sales Invoice</th>
+                    <th style="text-align: right;">Allocated Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in doc.custom_invoices %}
+                <tr>
+                    <td>{{ row.sales_invoice }}</td>
+                    <td style="text-align: right;">{{ frappe.utils.fmt_money(row.allocated_amount, currency=doc.currency) }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="amount-box">
+            <div class="amount-words">
+                <strong>Amount in words:</strong><br>
+                {{ frappe.utils.money_in_words(doc.amount, doc.currency) }}
+            </div>
+            <div class="amount-val">
+                {{ frappe.utils.fmt_money(doc.amount, currency=doc.currency) }}
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="receiver">
+            <div class="signature">Authorized Signatory</div>
+        </div>
+        <div class="date">
+            <p>Date: {{ frappe.utils.formatdate(frappe.utils.today()) }}</p>
+        </div>
+    </div>
+</div>
