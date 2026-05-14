@@ -23,6 +23,7 @@
   "payment_entry",
   "deposit_journal_entry",
   "invoice_table_section",
+  "get_outstanding_invoices_btn",
   "custom_invoices",
   "bounce_details_section",
   "bounce_date",
@@ -140,6 +141,11 @@
    "fieldname": "invoice_table_section",
    "fieldtype": "Section Break",
    "label": "Invoice Allocation"
+  },
+  {
+   "fieldname": "get_outstanding_invoices_btn",
+   "fieldtype": "Button",
+   "label": "Get Outstanding Invoices"
   },
   {
    "fieldname": "custom_invoices",

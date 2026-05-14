@@ -45,3 +45,37 @@ def clear_pdc(pdc_id, clearance_date):
 def get_customer_account(company, customer):
     from erpnext.accounts.party import get_party_account
     return get_party_account("Customer", customer, company)
+
+@frappe.whitelist()
+def fetch_outstanding_invoices(customer, company, amount):
+    """
+    Manually fetches outstanding invoices and calculates allocation.
+    This replaces the buggy ERPNext internal call.
+    """
+    invoices = frappe.get_all("Sales Invoice",
+        filters={
+            "customer": customer,
+            "company": company,
+            "docstatus": 1,
+            "outstanding_amount": [">", 0]
+        },
+        fields=["name", "outstanding_amount", "posting_date", "due_date"],
+        order_by="due_date asc"
+    )
+
+    remaining_amount = flt(amount)
+    allocation = []
+
+    for inv in invoices:
+        if remaining_amount <= 0:
+            break
+        
+        allocated = min(flt(inv.outstanding_amount), remaining_amount)
+        allocation.append({
+            "sales_invoice": inv.name,
+            "outstanding_amount": inv.outstanding_amount,
+            "allocated_amount": allocated
+        })
+        remaining_amount -= allocated
+
+    return allocation

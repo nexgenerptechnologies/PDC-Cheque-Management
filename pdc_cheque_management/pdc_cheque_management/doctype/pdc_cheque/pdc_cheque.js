@@ -13,13 +13,6 @@ frappe.ui.form.on('PDC Cheque', {
             };
         });
 
-        // Add button ABOVE Invoices Table
-        if (frm.doc.customer && frm.doc.amount && (!frm.doc.status || ['Draft', 'Received'].includes(frm.doc.status))) {
-            frm.fields_dict.custom_invoices.grid.add_custom_button(__('Get Outstanding Invoices'), () => {
-                frm.events.get_outstanding_invoices(frm);
-            });
-        }
-
         let s = frm.doc.status;
         if (!s || s === 'Draft') {
             frm.add_custom_button('Mark as Received', () => {
@@ -68,52 +61,33 @@ frappe.ui.form.on('PDC Cheque', {
         }
     },
 
-    get_outstanding_invoices: function(frm) {
-        // First, get the Customer's Receivable Account using our new whitelisted wrapper
-        frappe.call({
-            method: "pdc_cheque_management.pdc_cheque_management.api.get_customer_account",
-            args: {
-                company: frm.doc.company,
-                customer: frm.doc.customer
-            },
-            callback: function(res) {
-                let party_account = res.message;
-                
-                // Now call the original method with the account included
-                frappe.call({
-                    method: "erpnext.accounts.doctype.payment_entry.payment_entry.get_outstanding_reference_documents",
-                    args: {
-                        args: {
-                            "posting_date": frm.doc.cheque_date || frappe.datetime.get_today(),
-                            "company": frm.doc.company,
-                            "account": party_account,
-                            "party_type": "Customer",
-                            "party": frm.doc.customer,
-                            "bank_account": frm.doc.holding_account,
-                            "received_amount": frm.doc.amount,
-                            "payment_type": "Receive"
-                        }
-                    },
-                    callback: function(r) {
-                        if (r.message) {
-                            frm.clear_table("custom_invoices");
-                            let total_allocated = 0;
-                            let cheque_amount = frm.doc.amount;
+    get_outstanding_invoices_btn: function(frm) {
+        if (!frm.doc.customer || !frm.doc.amount) {
+            frappe.msgprint(__("Please select a <b>Customer</b> and enter an <b>Amount</b> first."));
+            return;
+        }
 
-                            r.message.forEach(d => {
-                                if (total_allocated < cheque_amount) {
-                                    let amount_to_allocate = Math.min(d.outstanding_amount, cheque_amount - total_allocated);
-                                    let row = frm.add_child("custom_invoices");
-                                    row.sales_invoice = d.voucher_no;
-                                    row.outstanding_amount = d.outstanding_amount;
-                                    row.allocated_amount = amount_to_allocate;
-                                    total_allocated += amount_to_allocate;
-                                }
-                            });
-                            frm.refresh_field("custom_invoices");
-                        }
-                    }
-                });
+        frappe.call({
+            method: "pdc_cheque_management.pdc_cheque_management.api.fetch_outstanding_invoices",
+            args: {
+                customer: frm.doc.customer,
+                company: frm.doc.company,
+                amount: frm.doc.amount
+            },
+            callback: function(r) {
+                if (r.message && r.message.length > 0) {
+                    frm.clear_table("custom_invoices");
+                    r.message.forEach(d => {
+                        let row = frm.add_child("custom_invoices");
+                        row.sales_invoice = d.sales_invoice;
+                        row.outstanding_amount = d.outstanding_amount;
+                        row.allocated_amount = d.allocated_amount;
+                    });
+                    frm.refresh_field("custom_invoices");
+                    frappe.show_alert({message: __("Invoices fetched and allocated."), indicator: 'green'});
+                } else {
+                    frappe.msgprint(__("No outstanding invoices found for this customer."));
+                }
             }
         });
     }
