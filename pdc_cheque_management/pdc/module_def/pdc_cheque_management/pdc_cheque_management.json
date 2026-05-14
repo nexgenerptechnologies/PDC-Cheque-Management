@@ -1,0 +1,13 @@
+{
+ "app_name": "pdc_cheque_management",
+ "creation": "2026-05-14 18:00:00.000000",
+ "docstatus": 0,
+ "doctype": "Module Def",
+ "full_name": "PDC Cheque Management",
+ "modified": "2026-05-14 19:00:00.000000",
+ "modified_by": "Administrator",
+ "module_name": "PDC Cheque Management",
+ "name": "PDC Cheque Management",
+ "owner": "Administrator",
+ "package": "PDC Cheque Management"
+}

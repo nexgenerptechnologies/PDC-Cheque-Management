@@ -3,7 +3,7 @@
  "docstatus": 0,
  "doctype": "Report",
  "is_standard": "Yes",
- "module": "PDC",
+ "module": "PDC Cheque Management",
  "name": "PDC Outstanding Statement",
  "owner": "Administrator",
  "report_type": "Script Report"
