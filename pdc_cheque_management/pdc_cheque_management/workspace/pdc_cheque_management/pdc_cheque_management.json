@@ -14,21 +14,9 @@
    "link_to": "PDC Cheque",
    "link_type": "DocType",
    "type": "Link"
-  },
-  {
-   "label": "PDC Clearance Tool",
-   "link_to": "pdc-clearance-tool",
-   "link_type": "Page",
-   "type": "Link"
-  },
-  {
-   "label": "PDC Outstanding Statement",
-   "link_to": "PDC Outstanding Statement",
-   "link_type": "Report",
-   "type": "Link"
   }
  ],
- "modified": "2026-05-14 22:00:00.000000",
+ "modified": "2026-05-14 23:00:00.000000",
  "modified_by": "Administrator",
  "module": "PDC Cheque Management",
  "name": "PDC Cheque Management",
