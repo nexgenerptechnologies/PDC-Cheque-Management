@@ -7,7 +7,7 @@
  "icon": "payment",
  "is_default": 0,
  "is_standard": 1,
- "label": "PDC Management Dashboard",
+ "label": "PDC Cheque Management",
  "links": [
   {
    "label": "PDC Documents",
@@ -44,10 +44,10 @@
    "type": "Link"
   }
  ],
- "modified": "2026-05-15 00:00:00.000000",
+ "modified": "2026-05-15 15:00:00.000000",
  "modified_by": "Administrator",
  "module": "PDC Cheque Management",
- "name": "PDC Management Dashboard",
+ "name": "PDC Cheque Management",
  "owner": "Administrator",
  "parent_page": "",
  "public": 1,
