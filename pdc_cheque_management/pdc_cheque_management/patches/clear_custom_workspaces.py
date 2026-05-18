@@ -6,7 +6,11 @@ def execute():
     workspaces_to_clear = [
         "PDC Cheque Management",
         "pdc_cheque_management",
-        "PDC Management Dashboard"
+        "PDC Management Dashboard",
+        "PDC & Banking Automation",
+        "pdc_and_banking_automation",
+        "PDC Banking Automation",
+        "pdc_banking_automation"
     ]
     
     for ws in workspaces_to_clear:

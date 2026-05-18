@@ -1,1 +1,1 @@
-pdc_cheque_management
+PDC Banking Automation

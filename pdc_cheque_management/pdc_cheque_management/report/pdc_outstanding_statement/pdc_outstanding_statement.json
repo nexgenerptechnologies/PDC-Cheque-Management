@@ -3,7 +3,7 @@
  "docstatus": 0,
  "doctype": "Report",
  "is_standard": "Yes",
- "module": "PDC Cheque Management",
+ "module": "PDC Banking Automation",
  "name": "PDC Outstanding Statement",
  "owner": "Administrator",
  "ref_doctype": "PDC Cheque",
