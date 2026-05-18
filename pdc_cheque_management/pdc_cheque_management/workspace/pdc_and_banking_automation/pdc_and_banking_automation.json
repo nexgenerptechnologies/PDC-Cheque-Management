@@ -1,0 +1,115 @@
+{
+ "charts": [],
+ "creation": "2026-05-14 14:50:00.000000",
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "extends_another_page": 0,
+ "icon": "payment",
+ "is_default": 0,
+ "is_standard": 1,
+ "label": "PDC & Banking Automation",
+ "links": [
+  {
+   "label": "PDC Documents",
+   "link_type": "DocType",
+   "type": "Header"
+  },
+  {
+   "label": "PDC Cheque",
+   "link_to": "PDC Cheque",
+   "link_type": "DocType",
+   "onboard": 1,
+   "type": "Link"
+  },
+  {
+   "label": "Tools",
+   "link_type": "DocType",
+   "type": "Header"
+  },
+  {
+   "label": "PDC Clearance Tool",
+   "link_to": "pdc-clearance-tool",
+   "link_type": "Page",
+   "onboard": 1,
+   "type": "Link"
+  },
+  {
+   "label": "Reports",
+   "link_type": "DocType",
+   "type": "Header"
+  },
+  {
+   "label": "PDC Outstanding Statement",
+   "link_to": "PDC Outstanding Statement",
+   "link_type": "Report",
+   "onboard": 1,
+   "type": "Link"
+  }
+ ],
+ "modified": "2026-05-15 23:30:00.000000",
+ "modified_by": "Administrator",
+ "module": "PDC Cheque Management",
+ "module_onboarding": "PDC Banking Automation",
+ "name": "PDC & Banking Automation",
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "roles": [],
+ "shortcuts": [
+  {
+   "label": "New PDC Cheque",
+   "link_to": "PDC Cheque",
+   "type": "DocType",
+   "icon": "add"
+  },
+  {
+   "label": "PDC Clearance Tool",
+   "link_to": "pdc-clearance-tool",
+   "type": "Page",
+   "icon": "upload"
+  },
+  {
+   "label": "Outstanding Report",
+   "link_to": "PDC Outstanding Statement",
+   "type": "Report",
+   "icon": "table"
+  }
+ ],
+ "cards": [
+  {
+   "label": "PDC Lifecycle Management",
+   "links": [
+    {
+     "label": "PDC Cheque (Main Document)",
+     "link_to": "PDC Cheque",
+     "link_type": "DocType"
+    },
+    {
+     "label": "PDC Invoice Detail (Allocations)",
+     "link_to": "PDC Invoice Detail",
+     "link_type": "DocType"
+    }
+   ]
+  },
+  {
+   "label": "Banking & Tools",
+   "links": [
+    {
+     "label": "PDC Clearance Tool (Bank Upload)",
+     "link_to": "pdc-clearance-tool",
+     "link_type": "Page"
+    }
+   ]
+  },
+  {
+   "label": "Reporting & Analytics",
+   "links": [
+    {
+     "label": "PDC Outstanding Statement (By Customer)",
+     "link_to": "PDC Outstanding Statement",
+     "link_type": "Report"
+    }
+   ]
+  }
+ ]
+}
