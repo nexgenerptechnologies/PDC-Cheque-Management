@@ -1,7 +1,7 @@
 app_name = "pdc_cheque_management"
-app_title = "PDC Management"
+app_title = "PDC & Banking Automation"
 app_publisher = "Antigravity"
-app_description = "Advanced PDC Cheque Management with Automated Invoice Allocation"
+app_description = "Advanced PDC Management and Automated Bank Reconciliation"
 app_email = "support@antigravity.ai"
 app_license = "mit"
 
