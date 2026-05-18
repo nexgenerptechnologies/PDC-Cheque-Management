@@ -10,8 +10,10 @@ def execute():
     ]
     
     for ws in workspaces_to_clear:
-        # Delete customized versions (where is_standard is 0)
-        frappe.db.delete("Workspace", {"name": ["like", f"%{ws}%"], "is_standard": 0})
-        
+        try:
+            frappe.db.delete("Workspace", {"name": ["like", f"%{ws}%"]})
+        except Exception:
+            pass
+
     frappe.db.commit()
     frappe.clear_cache()
