@@ -1,0 +1,19 @@
+{
+ "creation": "2026-05-18 12:00:00.000000",
+ "docstatus": 0,
+ "doctype": "Module Onboarding",
+ "is_complete": 0,
+ "module": "PDC Cheque Management",
+ "name": "PDC Banking Automation",
+ "owner": "Administrator",
+ "steps": [
+  {
+   "step": "Create First PDC"
+  },
+  {
+   "step": "Use Clearance Tool"
+  }
+ ],
+ "subtitle": "Welcome to PDC & Banking Automation. Follow these steps to get started.",
+ "title": "Get Started with PDC & Banking Automation"
+}

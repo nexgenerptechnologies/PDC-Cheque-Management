@@ -7,7 +7,7 @@
  "icon": "payment",
  "is_default": 0,
  "is_standard": 1,
- "label": "PDC Cheque Management",
+ "label": "PDC & Banking Automation",
  "links": [
   {
    "label": "PDC Documents",
@@ -49,6 +49,7 @@
  "modified": "2026-05-15 23:30:00.000000",
  "modified_by": "Administrator",
  "module": "PDC Cheque Management",
+ "module_onboarding": "PDC Banking Automation",
  "name": "PDC Cheque Management",
  "owner": "Administrator",
  "parent_page": "",

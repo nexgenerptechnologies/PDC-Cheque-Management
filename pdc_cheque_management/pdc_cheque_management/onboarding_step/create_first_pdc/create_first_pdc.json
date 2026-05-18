@@ -1,0 +1,13 @@
+{
+ "action": "View PDC Cheque",
+ "creation": "2026-05-18 12:00:00.000000",
+ "description": "Create your first PDC Cheque document to track an incoming post-dated cheque.",
+ "docstatus": 0,
+ "doctype": "Onboarding Step",
+ "is_complete": 0,
+ "is_single": 0,
+ "name": "Create First PDC",
+ "owner": "Administrator",
+ "reference_document": "PDC Cheque",
+ "title": "Create your First PDC Cheque"
+}
