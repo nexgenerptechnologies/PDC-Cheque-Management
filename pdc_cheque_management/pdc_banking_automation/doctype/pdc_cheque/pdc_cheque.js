@@ -70,7 +70,7 @@ frappe.ui.form.on('PDC Cheque', {
         }
 
         frappe.call({
-            method: "pdc_cheque_management.pdc_cheque_management.api.fetch_outstanding_invoices",
+            method: "pdc_cheque_management.pdc_banking_automation.api.fetch_outstanding_invoices",
             args: {
                 customer: frm.doc.customer,
                 company: frm.doc.company,
