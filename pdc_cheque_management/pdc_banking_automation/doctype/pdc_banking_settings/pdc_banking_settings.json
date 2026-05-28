@@ -1,0 +1,74 @@
+﻿{
+ "actions": [],
+ "creation": "2026-05-29 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "company",
+  "default_holding_account",
+  "default_main_bank_account",
+  "default_bank_charges_account"
+ ],
+ "fields": [
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company",
+   "reqd": 1
+  },
+  {
+   "fieldname": "default_holding_account",
+   "fieldtype": "Link",
+   "label": "Default Holding Account",
+   "options": "Account",
+   "description": "Temporary account for pending PDCs"
+  },
+  {
+   "fieldname": "default_main_bank_account",
+   "fieldtype": "Link",
+   "label": "Default Main Bank Account",
+   "options": "Account",
+   "description": "The actual bank account where cheques are cleared"
+  },
+  {
+   "fieldname": "default_bank_charges_account",
+   "fieldtype": "Link",
+   "label": "Default Bank Charges Account",
+   "options": "Account",
+   "description": "Account used to book bounce penalties"
+  }
+ ],
+ "issingle": 1,
+ "links": [],
+ "modified": "2026-05-29 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "PDC Banking Automation",
+ "name": "PDC Banking Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "Accounts Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

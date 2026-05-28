@@ -1,9 +1,15 @@
-import frappe
+﻿import frappe
 from frappe.model.document import Document
 from frappe.utils import today, getdate, flt
 
 class PDCCheque(Document):
     def validate(self):
+        # Fetch defaults if empty
+        if not self.holding_account:
+            self.holding_account = frappe.db.get_single_value("PDC Banking Settings", "default_holding_account")
+        if not self.main_bank_account:
+            self.main_bank_account = frappe.db.get_single_value("PDC Banking Settings", "default_main_bank_account")
+            
         # This logic runs before every save
         self.process_status_change()
 
@@ -26,7 +32,7 @@ class PDCCheque(Document):
 
     def create_payment_entry(self):
         if not self.custom_invoices:
-            frappe.throw("❌ Please add invoices in the table or fetch outstanding invoices.")
+            frappe.throw("âŒ Please add invoices in the table or fetch outstanding invoices.")
 
         pe = frappe.new_doc("Payment Entry")
         pe.payment_type = "Receive"
@@ -50,12 +56,12 @@ class PDCCheque(Document):
             total_allocated += flt(row.allocated_amount)
 
         if total_allocated > self.amount:
-            frappe.throw(f"❌ Cannot allocate more than Cheque Amount ({self.amount})")
+            frappe.throw(f"âŒ Cannot allocate more than Cheque Amount ({self.amount})")
         
         pe.insert(ignore_permissions=True)
         pe.submit()
         self.payment_entry = pe.name
-        frappe.msgprint(f"✅ Payment Entry {pe.name} created.")
+        frappe.msgprint(f"âœ… Payment Entry {pe.name} created.")
 
     def create_deposit_journal_entry(self):
         je = frappe.new_doc("Journal Entry")
@@ -71,7 +77,7 @@ class PDCCheque(Document):
         je.insert(ignore_permissions=True)
         je.submit()
         self.deposit_journal_entry = je.name
-        frappe.msgprint(f"✅ Deposit Journal Entry {je.name} created.")
+        frappe.msgprint(f"âœ… Deposit Journal Entry {je.name} created.")
 
     def handle_bounce_or_cancel(self):
         has_cancelled = False
@@ -81,11 +87,11 @@ class PDCCheque(Document):
                 if d_je.docstatus == 1:
                     # Reset clearance date if it was cleared
                     if d_je.clearance_date:
-                        frappe.db.set_value("Journal Entry", d_je.name, "clearance_date", None)
-                    
+                        d_je.db_set("clearance_date", None)
                     d_je.cancel()
                     has_cancelled = True
-            except: pass
+            except Exception as e:
+                frappe.msgprint(f"Failed to cancel Deposit Journal Entry: {str(e)}")
 
         if self.payment_entry:
             try:
@@ -93,10 +99,13 @@ class PDCCheque(Document):
                 if p_pe.docstatus == 1:
                     p_pe.cancel()
                     has_cancelled = True
-            except: pass
+            except Exception as e:
+                frappe.msgprint(f"Failed to cancel Payment Entry: {str(e)}")
 
         if self.status == "Bounced" and flt(self.bank_charges) > 0 and not self.bounce_journal_entry:
-            acc = self.custom_bank_charges_account or "BANK CHARGES - FEPL"
+            acc = self.custom_bank_charges_account or frappe.db.get_single_value("PDC Banking Settings", "default_bank_charges_account")
+            if not acc:
+                frappe.throw("Please configure Default Bank Charges Account in PDC Banking Settings.")
             cje = frappe.new_doc("Journal Entry")
             cje.company = self.company
             cje.posting_date = self.bounce_date or today()
@@ -114,5 +123,7 @@ class PDCCheque(Document):
     def update_clearance_date(self):
         actual_date = self.custom_clearance_date or today()
         if getdate(actual_date) < getdate(self.cheque_date):
-            frappe.throw(f"❌ Clearance Date cannot be before Cheque Date.")
+            frappe.throw(f"âŒ Clearance Date cannot be before Cheque Date.")
         frappe.db.set_value("Journal Entry", self.deposit_journal_entry, "clearance_date", actual_date)
+
+

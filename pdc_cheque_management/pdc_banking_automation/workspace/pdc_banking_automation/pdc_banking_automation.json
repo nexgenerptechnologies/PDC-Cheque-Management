@@ -1,4 +1,4 @@
-{
+﻿{
  "charts": [],
  "creation": "2026-05-14 14:50:00.000000",
  "docstatus": 0,
@@ -39,6 +39,17 @@
    "label": "PDC Outstanding Statement",
    "link_to": "PDC Outstanding Statement",
    "link_type": "Report",
+   "onboard": 1,
+   "type": "Link"
+  }
+  {
+   "label": "Settings",
+   "type": "Header"
+  },
+  {
+   "label": "PDC Banking Settings",
+   "link_to": "PDC Banking Settings",
+   "link_type": "DocType",
    "onboard": 1,
    "type": "Link"
   }
@@ -98,6 +109,12 @@
      "link_to": "pdc-clearance-tool",
      "link_type": "Page",
      "type": "Link"
+    },
+    {
+     "label": "PDC Banking Settings",
+     "link_to": "PDC Banking Settings",
+     "link_type": "DocType",
+     "type": "Link"
     }
    ]
   },
@@ -114,3 +131,5 @@
   }
  ]
 }
+
+
