@@ -110,6 +110,8 @@ class PDCCheque(Document):
             cje.company = self.company
             cje.posting_date = self.bounce_date or today()
             cje.voucher_type = "Bank Entry"
+            cje.cheque_no = self.cheque_no
+            cje.cheque_date = self.cheque_date
             cje.append("accounts", {"account": acc, "debit_in_account_currency": self.bank_charges})
             cje.append("accounts", {"account": self.main_bank_account, "credit_in_account_currency": self.bank_charges})
             cje.insert(ignore_permissions=True)
@@ -125,5 +127,6 @@ class PDCCheque(Document):
         if getdate(actual_date) < getdate(self.cheque_date):
             frappe.throw(f"âŒ Clearance Date cannot be before Cheque Date.")
         frappe.db.set_value("Journal Entry", self.deposit_journal_entry, "clearance_date", actual_date)
+
 
 
