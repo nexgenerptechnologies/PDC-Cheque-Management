@@ -7,7 +7,8 @@
  "engine": "InnoDB",
  "field_order": [
   "section_break_1",
-  "customer",
+  "party_type",
+  "party",
   "amount",
   "currency",
   "status",
@@ -41,7 +42,8 @@
    "label": "Customer & Amount"
   },
   {
-   "default": "Customer",
+   "default": "party_type",
+  "party",
    "fieldname": "party_type",
    "fieldtype": "Select",
    "in_list_view": 1,
