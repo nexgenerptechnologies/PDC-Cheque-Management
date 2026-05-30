@@ -47,14 +47,16 @@ def get_customer_account(company, customer):
     return get_party_account("Customer", customer, company)
 
 @frappe.whitelist()
-def fetch_outstanding_invoices(customer, company, amount):
+def fetch_outstanding_invoices(party_type, party, company, amount):
     """
-    Manually fetches outstanding invoices and calculates allocation.
-    This replaces the buggy ERPNext internal call.
+    Manually fetches outstanding invoices and calculates allocation for Customers or Suppliers.
     """
-    invoices = frappe.get_all("Sales Invoice",
+    doctype = "Sales Invoice" if party_type == "Customer" else "Purchase Invoice"
+    party_field = "customer" if party_type == "Customer" else "supplier"
+
+    invoices = frappe.get_all(doctype,
         filters={
-            "customer": customer,
+            party_field: party,
             "company": company,
             "docstatus": 1,
             "outstanding_amount": [">", 0]
@@ -72,7 +74,8 @@ def fetch_outstanding_invoices(customer, company, amount):
         
         allocated = min(flt(inv.outstanding_amount), remaining_amount)
         allocation.append({
-            "sales_invoice": inv.name,
+            "reference_doctype": doctype,
+            "reference_name": inv.name,
             "outstanding_amount": inv.outstanding_amount,
             "allocated_amount": allocated
         })
