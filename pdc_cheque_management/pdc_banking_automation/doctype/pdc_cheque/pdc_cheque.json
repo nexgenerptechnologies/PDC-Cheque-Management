@@ -41,13 +41,23 @@
    "label": "Customer & Amount"
   },
   {
-   "fieldname": "customer",
-   "fieldtype": "Link",
+   "default": "Customer",
+   "fieldname": "party_type",
+   "fieldtype": "Select",
    "in_list_view": 1,
-   "label": "Customer",
-   "options": "Customer",
+   "label": "Party Type",
+   "options": "Customer\nSupplier",
    "reqd": 1
   },
+  {
+   "fieldname": "party",
+   "fieldtype": "Dynamic Link",
+   "in_list_view": 1,
+   "label": "Party",
+   "options": "party_type",
+   "reqd": 1
+  },
+
   {
    "fieldname": "amount",
    "fieldtype": "Currency",
