@@ -1,4 +1,4 @@
-﻿import frappe
+import frappe
 from frappe.model.document import Document
 from frappe.utils import today, getdate, flt
 
@@ -6,7 +6,10 @@ class PDCCheque(Document):
     def validate(self):
         # Fetch defaults if empty
         if not self.holding_account:
-            self.holding_account = frappe.db.get_single_value("PDC Banking Settings", "default_holding_account")
+            if self.party_type == "Supplier":
+                self.holding_account = frappe.db.get_single_value("PDC Banking Settings", "default_payable_holding_account")
+            else:
+                self.holding_account = frappe.db.get_single_value("PDC Banking Settings", "default_holding_account")
         if not self.main_bank_account:
             self.main_bank_account = frappe.db.get_single_value("PDC Banking Settings", "default_main_bank_account")
             
@@ -14,8 +17,8 @@ class PDCCheque(Document):
         self.process_status_change()
 
     def process_status_change(self):
-        # --- 1. RECEIVED ---
-        if self.status == "Received" and not self.payment_entry:
+        # --- 1. RECEIVED or ISSUED ---
+        if self.status in ["Received", "Issued"] and not self.payment_entry:
             self.create_payment_entry()
 
         # --- 2. DEPOSITED ---
