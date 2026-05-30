@@ -247,7 +247,7 @@
    "write": 1
   }
  ],
- "search_fields": "customer,cheque_no",
+ "search_fields": "party,cheque_no",
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": [],

@@ -11,13 +11,22 @@
  ],
  "fields": [
   {
-   "fieldname": "sales_invoice",
+   "fieldname": "reference_doctype",
    "fieldtype": "Link",
    "in_list_view": 1,
-   "label": "Sales Invoice",
-   "options": "Sales Invoice",
+   "label": "Reference DocType",
+   "options": "DocType",
    "reqd": 1
   },
+  {
+   "fieldname": "reference_name",
+   "fieldtype": "Dynamic Link",
+   "in_list_view": 1,
+   "label": "Reference Name",
+   "options": "reference_doctype",
+   "reqd": 1
+  },
+
   {
    "fieldname": "outstanding_amount",
    "fieldtype": "Currency",
