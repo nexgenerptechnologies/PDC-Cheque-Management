@@ -8,10 +8,8 @@ def fetch_outstanding_invoices(party_type, party, company, amount, currency="INR
 
     company_currency = frappe.db.get_value("Company", company, "default_currency")
     
-    account_fieldname = "default_receivable_account" if party_type == "Customer" else "default_payable_account"
-    party_account = frappe.db.get_value(party_type, party, account_fieldname)
-    if not party_account:
-        party_account = frappe.db.get_value("Company", company, account_fieldname)
+    from erpnext.accounts.party import get_party_account
+    party_account = get_party_account(party_type, party, company)
         
     account_currency = frappe.db.get_value("Account", party_account, "account_currency")
     if not account_currency:
