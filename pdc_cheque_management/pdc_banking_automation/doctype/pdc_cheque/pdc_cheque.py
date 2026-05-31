@@ -35,36 +35,43 @@ class PDCCheque(Document):
 
     def create_payment_entry(self):
         if not self.custom_invoices:
-            frappe.throw("âŒ Please add invoices in the table or fetch outstanding invoices.")
+            frappe.throw("Please add invoices in the table or fetch outstanding invoices.")
 
         pe = frappe.new_doc("Payment Entry")
-        pe.payment_type = "Receive"
-        pe.party_type = "Customer"
-        pe.party = self.customer
+        pe.payment_type = "Pay" if self.party_type == "Supplier" else "Receive"
+        pe.party_type = self.party_type
+        pe.party = self.party
         pe.company = self.company
         pe.posting_date = today()
-        pe.paid_to = self.holding_account
-        pe.paid_amount = self.amount
-        pe.received_amount = self.amount
+        
+        if self.party_type == "Supplier":
+            pe.paid_from = self.holding_account
+            pe.paid_amount = self.amount
+            pe.received_amount = self.amount
+        else:
+            pe.paid_to = self.holding_account
+            pe.paid_amount = self.amount
+            pe.received_amount = self.amount
+            
         pe.reference_no = self.cheque_no
         pe.reference_date = self.cheque_date
 
         total_allocated = 0
         for row in self.custom_invoices:
             pe.append("references", {
-                "reference_doctype": "Sales Invoice", 
-                "reference_name": row.sales_invoice, 
+                "reference_doctype": row.reference_doctype, 
+                "reference_name": row.reference_name, 
                 "allocated_amount": row.allocated_amount
             })
             total_allocated += flt(row.allocated_amount)
 
         if total_allocated > self.amount:
-            frappe.throw(f"âŒ Cannot allocate more than Cheque Amount ({self.amount})")
+            frappe.throw(f"Cannot allocate more than Cheque Amount ({self.amount})")
         
         pe.insert(ignore_permissions=True)
         pe.submit()
         self.payment_entry = pe.name
-        frappe.msgprint(f"âœ… Payment Entry {pe.name} created.")
+        frappe.msgprint(f"Payment Entry {pe.name} created.")
 
     def create_deposit_journal_entry(self):
         je = frappe.new_doc("Journal Entry")
@@ -80,7 +87,7 @@ class PDCCheque(Document):
         je.insert(ignore_permissions=True)
         je.submit()
         self.deposit_journal_entry = je.name
-        frappe.msgprint(f"âœ… Deposit Journal Entry {je.name} created.")
+        frappe.msgprint(f"Ã¢Å“â€¦ Deposit Journal Entry {je.name} created.")
 
     def handle_bounce_or_cancel(self):
         has_cancelled = False
@@ -128,7 +135,7 @@ class PDCCheque(Document):
     def update_clearance_date(self):
         actual_date = self.custom_clearance_date or today()
         if getdate(actual_date) < getdate(self.cheque_date):
-            frappe.throw(f"âŒ Clearance Date cannot be before Cheque Date.")
+            frappe.throw(f"Ã¢ÂÅ’ Clearance Date cannot be before Cheque Date.")
         frappe.db.set_value("Journal Entry", self.deposit_journal_entry, "clearance_date", actual_date)
 
 
