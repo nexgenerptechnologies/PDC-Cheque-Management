@@ -113,7 +113,7 @@ def fetch_outstanding_invoices(party_type, party, company, amount, currency="INR
             "docstatus": 1,
             "outstanding_amount": [">", 0]
         },
-        fields=["name", "outstanding_amount", "posting_date", "due_date"],
+        fields=["name", "outstanding_amount", "posting_date", "due_date", "currency"],
         order_by="due_date asc"
     )
 
