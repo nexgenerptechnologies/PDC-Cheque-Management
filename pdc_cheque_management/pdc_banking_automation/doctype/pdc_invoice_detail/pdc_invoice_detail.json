@@ -42,14 +42,16 @@
                        "fieldtype":  "Currency",
                        "in_list_view":  1,
                        "label":  "Outstanding Amount",
-                       "read_only":  1
+                       "read_only":  1,
+                       "options":  "invoice_currency"
                    },
                    {
                        "fieldname":  "allocated_amount",
                        "fieldtype":  "Currency",
                        "in_list_view":  1,
                        "label":  "Allocated Amount",
-                       "reqd":  1
+                       "reqd":  1,
+                       "options":  "invoice_currency"
                    }
                ],
     "index_pages":  [
