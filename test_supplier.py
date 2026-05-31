@@ -1,6 +1,6 @@
 import frappe
 
-@frappe.whitelist()
+from frappe import whitelist_for_tests`n@whitelist_for_tests()
 def check_supplier():
     s = frappe.get_doc("Supplier", "KAMAYA ELECTRIC (M) SDN. BHD. COMPANY")
     account = s.default_payable_account or frappe.get_value("Company", "NexGen Enterprises", "default_payable_account")

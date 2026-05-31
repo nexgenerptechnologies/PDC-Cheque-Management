@@ -36,27 +36,37 @@ def get_columns():
     ]
 
 def get_data(filters):
-    conditions = ""
+    conditions = []
+    values = {}
+    
     if filters.get("customer"):
-        conditions += f" AND customer = '{filters.get('customer')}'"
+        conditions.append("customer = %(customer)s")
+        values["customer"] = filters.get("customer")
     if filters.get("company"):
-        conditions += f" AND company = '{filters.get('company')}'"
+        conditions.append("company = %(company)s")
+        values["company"] = filters.get("company")
+
+    where_clause = ""
+    if conditions:
+        where_clause = " AND " + " AND ".join(conditions)
 
     # 1. Get Gross Outstanding (From Sales Invoices)
-    invoices = frappe.db.sql(f"""
-        SELECT customer, SUM(outstanding_amount) as gross_outstanding
-        FROM `tabSales Invoice`
-        WHERE docstatus = 1 AND outstanding_amount > 0 {conditions}
-        GROUP BY customer
-    """, as_dict=1)
+    query_invoices = (
+        "SELECT customer, SUM(outstanding_amount) as gross_outstanding "
+        "FROM `tabSales Invoice` "
+        "WHERE docstatus = 1 AND outstanding_amount > 0 " + where_clause + " "
+        "GROUP BY customer"
+    )
+    invoices = frappe.db.sql(query_invoices, values, as_dict=1)
 
     # 2. Get PDC Received (Status Received or Deposited)
-    pdcs = frappe.db.sql(f"""
-        SELECT customer, SUM(amount) as pdc_received
-        FROM `tabPDC Cheque`
-        WHERE docstatus < 2 AND status IN ('Received', 'Deposited') {conditions}
-        GROUP BY customer
-    """, as_dict=1)
+    query_pdcs = (
+        "SELECT customer, SUM(amount) as pdc_received "
+        "FROM `tabPDC Cheque` "
+        "WHERE docstatus < 2 AND status IN ('Received', 'Deposited') " + where_clause + " "
+        "GROUP BY customer"
+    )
+    pdcs = frappe.db.sql(query_pdcs, values, as_dict=1)
 
     # Map them together
     customer_data = {}

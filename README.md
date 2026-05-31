@@ -43,16 +43,6 @@ Track complete status histories including:
 
 ---
 
-##  Installation
-
-From your Frappe bench, run the following commands:
-
-`ash
-bench get-app https://github.com/nexgenerptechnologies/PDC-Cheque-Management.git
-bench --site [your-site-name] install-app pdc_cheque_management
-bench --site [your-site-name] migrate
-`
-
 ##  License
 
 This project is licensed under the MIT License.
