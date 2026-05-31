@@ -38,7 +38,7 @@ def fetch_outstanding_invoices(party_type, party, company, amount, currency="INR
             break
 
         if account_currency == company_currency and inv.currency != company_currency:
-            inv_outstanding = flt(inv.base_outstanding_amount)
+            inv_outstanding = flt(inv.outstanding_amount) * flt(inv.conversion_rate or 1.0)
             inv_curr = company_currency
         else:
             inv_outstanding = flt(inv.outstanding_amount)
