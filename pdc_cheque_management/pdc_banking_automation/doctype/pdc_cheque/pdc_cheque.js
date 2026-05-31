@@ -1,4 +1,24 @@
 frappe.ui.form.on('PDC Cheque', {
+    setup: function(frm) {
+        // Fetch default settings on load
+        frappe.db.get_single_value('PDC Banking Settings', 'default_holding_account').then(v => frm.default_holding_account = v);
+        frappe.db.get_single_value('PDC Banking Settings', 'default_payable_holding_account').then(v => frm.default_payable_holding_account = v);
+        frappe.db.get_single_value('PDC Banking Settings', 'default_main_bank_account').then(v => {
+            if(!frm.doc.main_bank_account) frm.set_value('main_bank_account', v);
+        });
+    },
+    party_type: function(frm) {
+        // Auto-switch holding account based on party type
+        if (frm.doc.party_type === 'Supplier') {
+            if (frm.default_payable_holding_account) {
+                frm.set_value('holding_account', frm.default_payable_holding_account);
+            }
+        } else {
+            if (frm.default_holding_account) {
+                frm.set_value('holding_account', frm.default_holding_account);
+            }
+        }
+    },
     refresh: function(frm) {
         if (frm.is_new()) return;
 
