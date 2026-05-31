@@ -1,27 +1,53 @@
-# PDC Cheque Management
+# PDC Cheque Management for ERPNext
 
-An advanced ERPNext v15/v16 application for managing Post-Dated Cheques (PDC) with automated invoice allocation.
+<div align="center">
+  <h3>An enterprise-grade Post-Dated Cheque (PDC) lifecycle management application for Frappe & ERPNext.</h3>
+</div>
 
-## Features
-- **Fetch Outstanding Invoices**: Automatically retrieve and allocate cheque amounts to unpaid invoices.
-- **Automated Workflow**: Handles status transitions from Received to Deposited, Cleared, or Bounced.
-- **Automated Accounting**: Automatically creates Payment Entries and Journal Entries based on cheque status.
-- **Bank Charges Tracking**: Records bank charges for bounced cheques.
-- **Premium UI**: Custom styling for clear status visibility and better user experience.
+**PDC Cheque Management** is a powerful, bi-directional banking automation tool designed to eliminate manual data entry, streamline bank reconciliations, and handle complex multi-currency allocations natively within ERPNext. Whether you are receiving PDCs from Customers or issuing PDCs to Suppliers, this app handles the entire accounting lifecycle automatically.
 
-## Installation
-1. Clone the repository to your `apps` folder:
-   ```bash
-   git clone https://github.com/nexgenerptechnologies/PDC-Cheque-Management.git
-   ```
-2. Install the app on your site:
-   ```bash
-   bench --site [your-site-name] install-app pdc_cheque_management
-   ```
-3. Migrate the site:
-   ```bash
-   bench --site [your-site-name] migrate
-   ```
+---
 
-## License
-MIT
+## 🌟 Key Features
+
+### 1. Bi-Directional Party Engine
+Seamlessly manage both Accounts Receivable (Customers) and Accounts Payable (Suppliers) from a single unified interface. The system intelligently adapts its behavior based on the direction of money flow.
+
+### 2. Intelligent Holding Accounts
+Configure default Temporary Bank/Cash holding accounts for both Receivables (e.g., *Cheque In Hand*) and Payables (e.g., *PDCs Issued*). The UI dynamically auto-switches to the correct holding ledger the moment you select the Party Type.
+
+### 3. Flawless Multi-Currency & Ledger Integration
+* Automatically detects the Supplier/Customer's underlying Account Currency.
+* Natively converts foreign currency invoices against your Base Currency ledger accounts using historical conversion rates.
+* Perfectly mirrors standard ERPNext Payment Entry logic, ensuring **Exchange Gain/Loss** journal entries are generated accurately and effortlessly in the background.
+
+### 4. Automated Payment Entry Generation
+When a cheque is marked as "Received" or "Issued," the engine auto-generates the corresponding Payment Entry, automatically calculating allocations and intelligently mapping paid_from and paid_to accounts based on the transaction type.
+
+### 5. Bulk PDC Clearance Tool
+Tired of clearing cheques one by one? Use the built-in **PDC Clearance Tool** to filter cheques by Date, Bank, or Status. Mark dozens of cheques as "Cleared" or "Deposited" with a single click, automating your daily banking workflows instantly.
+
+### 6. Full Cheque Lifecycle Tracking
+Track complete status histories including:
+* Draft
+* Received / Issued
+* Deposited
+* Cleared
+* Cancelled
+* Bounced (with automated Bounce Date & Reason tracking)
+
+---
+
+## 🛠️ Installation
+
+From your Frappe bench, run the following commands:
+
+`ash
+bench get-app https://github.com/nexgenerptechnologies/PDC-Cheque-Management.git
+bench --site [your-site-name] install-app pdc_cheque_management
+bench --site [your-site-name] migrate
+`
+
+## 📝 License
+
+This project is licensed under the MIT License.
