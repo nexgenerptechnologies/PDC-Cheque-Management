@@ -87,7 +87,7 @@ class PDCCheque(Document):
         je.insert(ignore_permissions=True)
         je.submit()
         self.deposit_journal_entry = je.name
-        frappe.msgprint(f"Ã¢Å“â€¦ Deposit Journal Entry {je.name} created.")
+        frappe.msgprint(f"Deposit Journal Entry {je.name} created.")
 
     def handle_bounce_or_cancel(self):
         has_cancelled = False
@@ -135,7 +135,7 @@ class PDCCheque(Document):
     def update_clearance_date(self):
         actual_date = self.custom_clearance_date or today()
         if getdate(actual_date) < getdate(self.cheque_date):
-            frappe.throw(f"Ã¢ÂÅ’ Clearance Date cannot be before Cheque Date.")
+            frappe.throw(f"ÃƒÂ¢Ã‚ÂÃ…â€™ Clearance Date cannot be before Cheque Date.")
         frappe.db.set_value("Journal Entry", self.deposit_journal_entry, "clearance_date", actual_date)
 
 

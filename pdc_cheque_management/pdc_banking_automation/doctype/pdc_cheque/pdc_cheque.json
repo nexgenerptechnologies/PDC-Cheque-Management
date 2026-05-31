@@ -80,7 +80,7 @@
                        "fieldtype":  "Select",
                        "in_list_view":  1,
                        "label":  "Status",
-                       "options":  "Draft\nReceived\nDeposited\nCleared\nBounced\nCancelled",
+                       "options":  "Draft\nReceived\nIssued\nDeposited\nCleared\nBounced\nCancelled",
                        "default":  "Draft",
                        "read_only":  1
                    },
