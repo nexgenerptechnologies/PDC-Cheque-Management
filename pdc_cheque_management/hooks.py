@@ -18,3 +18,5 @@ app_include_css = "/assets/pdc_cheque_management/css/pdc_style.css"
 #         "validate": "pdc_management.pdc.doctype.pdc_cheque.pdc_cheque.validate"
 #     }
 # }
+
+required_apps = ["frappe>=15.0.0<17.0.0", "erpnext>=15.0.0<17.0.0"]
