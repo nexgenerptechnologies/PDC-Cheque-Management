@@ -59,3 +59,42 @@ def fetch_outstanding_invoices(party_type, party, company, amount, currency="INR
             remaining_amount -= allocated
 
     return allocation
+@frappe.whitelist()
+def get_pdc_cheques(filters):
+    if isinstance(filters, str):
+        import json
+        filters = json.loads(filters)
+        
+    query_filters = {"docstatus": ["<", 2]}
+    if filters.get("from_date"):
+        query_filters["cheque_date"] = [">=", filters.get("from_date")]
+    if filters.get("to_date"):
+        if "cheque_date" in query_filters:
+            query_filters["cheque_date"] = ["between", [filters.get("from_date"), filters.get("to_date")]]
+        else:
+            query_filters["cheque_date"] = ["<=", filters.get("to_date")]
+    if filters.get("status"):
+        query_filters["status"] = filters.get("status")
+    if filters.get("party_type") and filters.get("party"):
+        query_filters["party_type"] = filters.get("party_type")
+        query_filters["party"] = filters.get("party")
+
+    return frappe.get_all("PDC Cheque", filters=query_filters, fields=["name", "cheque_no", "cheque_date", "party", "amount", "currency", "status"], order_by="cheque_date asc")
+
+@frappe.whitelist()
+def bulk_update_cheques(cheque_names, target_status, action_date):
+    if isinstance(cheque_names, str):
+        import json
+        cheque_names = json.loads(cheque_names)
+        
+    for name in cheque_names:
+        doc = frappe.get_doc("PDC Cheque", name)
+        if target_status == "Cleared" or target_status == "Deposited":
+            doc.custom_clearance_date = action_date
+        elif target_status == "Bounced":
+            doc.bounce_date = action_date
+            
+        doc.status = target_status
+        doc.save()
+        
+    return {"status": "success"}
