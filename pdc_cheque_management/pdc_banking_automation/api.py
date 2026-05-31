@@ -95,7 +95,6 @@ def bulk_update_cheques(cheque_names, target_status, action_date):
             doc.bounce_date = action_date
             
         doc.status = target_status
-        doc.flags.ignore_mandatory = True
         doc.save()
         
     return {"status": "success"}
