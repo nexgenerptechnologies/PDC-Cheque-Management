@@ -1,4 +1,9 @@
-# PDC Cheque Management for ERPNext
+# PDC Cheque Management
+
+![Frappe Framework](https://img.shields.io/badge/Frappe-v15%20%7C%20v16-blue)
+![ERPNext](https://img.shields.io/badge/ERPNext-v15%20%7C%20v16-brightgreen)
+![License](https://img.shields.io/badge/License-MIT-lightgrey)
+ for ERPNext
 
 <div align="center">
   <h3>An enterprise-grade Post-Dated Cheque (PDC) lifecycle management application for Frappe & ERPNext.</h3>
@@ -8,7 +13,7 @@
 
 ---
 
-## Ã°Å¸Å’Å¸ Key Features
+## ÃƒÂ°Ã…Â¸Ã…â€™Ã…Â¸ Key Features
 
 ### 1. Bi-Directional Party Engine
 Seamlessly manage both Accounts Receivable (Customers) and Accounts Payable (Suppliers) from a single unified interface. The system intelligently adapts its behavior based on the direction of money flow.
@@ -38,7 +43,7 @@ Track complete status histories including:
 
 ---
 
-## Ã°Å¸â€ºÂ Ã¯Â¸Â Installation
+## ÃƒÂ°Ã…Â¸Ã¢â‚¬ÂºÃ‚Â ÃƒÂ¯Ã‚Â¸Ã‚Â Installation
 
 From your Frappe bench, run the following commands:
 
@@ -48,15 +53,15 @@ bench --site [your-site-name] install-app pdc_cheque_management
 bench --site [your-site-name] migrate
 `
 
-## Ã°Å¸â€œÂ License
+## ÃƒÂ°Ã…Â¸Ã¢â‚¬Å“Ã‚Â License
 
 This project is licensed under the MIT License.
 ## Support & Contact
 
 If you have any questions, encounter any issues, or require customizations, our support team at **Nexgen ERP Technologies** is ready to help!
 
-* ðŸ’¬ **WhatsApp:** [Click to chat with us on WhatsApp](https://wa.me/919811920503)
-* ðŸ“§ **Email:** [nexgenerptechnologies@gmail.com](mailto:nexgenerptechnologies@gmail.com)
+* Ã°Å¸â€™Â¬ **WhatsApp:** [Click to chat with us on WhatsApp](https://wa.me/919811920503)
+* Ã°Å¸â€œÂ§ **Email:** [nexgenerptechnologies@gmail.com](mailto:nexgenerptechnologies@gmail.com)
 
 ## Legal
 
