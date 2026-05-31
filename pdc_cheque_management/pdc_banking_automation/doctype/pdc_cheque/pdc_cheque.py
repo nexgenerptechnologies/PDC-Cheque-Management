@@ -44,25 +44,29 @@ class PDCCheque(Document):
         pe.company = self.company
         pe.posting_date = today()
         
-        party_currency = frappe.db.get_value(self.party_type, self.party, "default_currency") or frappe.db.get_value("Company", self.company, "default_currency")
-        party_amount = self.amount
+        party_account_fieldname = "default_receivable_account" if self.party_type == "Customer" else "default_payable_account"
+        party_account = frappe.db.get_value(self.party_type, self.party, party_account_fieldname) or frappe.db.get_value("Company", self.company, party_account_fieldname)
+        account_currency = frappe.db.get_value("Account", party_account, "account_currency") or frappe.db.get_value("Company", self.company, "default_currency")
         
-        if self.currency != party_currency:
+        party_amount = self.amount
+        if self.currency != account_currency:
             try:
                 from erpnext.setup.utils import get_exchange_rate
-                rate = get_exchange_rate(self.currency, party_currency)
+                rate = get_exchange_rate(self.currency, account_currency)
                 party_amount = flt(self.amount) * flt(rate)
             except Exception:
                 pass
-                
+
         if self.party_type == "Supplier":
             pe.paid_from = self.holding_account
             pe.paid_amount = self.amount
             pe.received_amount = party_amount
+            pe.paid_to = party_account
         else:
             pe.paid_to = self.holding_account
             pe.received_amount = self.amount
             pe.paid_amount = party_amount
+            pe.paid_from = party_account
             
         pe.reference_no = self.cheque_no
         pe.reference_date = self.cheque_date
@@ -77,7 +81,7 @@ class PDCCheque(Document):
             total_allocated += flt(row.allocated_amount)
 
         if flt(total_allocated, 2) > flt(party_amount, 2):
-            frappe.throw(f"Cannot allocate more than Cheque Amount Equivalent ({party_amount} {party_currency})")
+            frappe.throw(f"Cannot allocate more than Cheque Amount Equivalent ({party_amount} {account_currency})")
         
         pe.setup_party_account_field()
         pe.set_missing_values()
@@ -149,7 +153,7 @@ class PDCCheque(Document):
     def update_clearance_date(self):
         actual_date = self.custom_clearance_date or today()
         if getdate(actual_date) < getdate(self.cheque_date):
-            frappe.throw(f"ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚ÂÃƒÆ’Ã¢â‚¬Â¦ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ Clearance Date cannot be before Cheque Date.")
+            frappe.throw(f"ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚ÂÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢ Clearance Date cannot be before Cheque Date.")
         frappe.db.set_value("Journal Entry", self.deposit_journal_entry, "clearance_date", actual_date)
 
 
