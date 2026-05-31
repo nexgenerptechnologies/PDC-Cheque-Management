@@ -8,7 +8,7 @@
 
 ---
 
-## 🌟 Key Features
+## ðŸŒŸ Key Features
 
 ### 1. Bi-Directional Party Engine
 Seamlessly manage both Accounts Receivable (Customers) and Accounts Payable (Suppliers) from a single unified interface. The system intelligently adapts its behavior based on the direction of money flow.
@@ -38,7 +38,7 @@ Track complete status histories including:
 
 ---
 
-## 🛠️ Installation
+## ðŸ› ï¸ Installation
 
 From your Frappe bench, run the following commands:
 
@@ -48,6 +48,17 @@ bench --site [your-site-name] install-app pdc_cheque_management
 bench --site [your-site-name] migrate
 `
 
-## 📝 License
+## ðŸ“ License
 
 This project is licensed under the MIT License.
+## Support & Contact
+
+If you have any questions, encounter any issues, or require customizations, our support team at **Nexgen ERP Technologies** is ready to help!
+
+* 💬 **WhatsApp:** [Click to chat with us (+91-9811920503)](https://wa.me/919811920503)
+* 📧 **Email:** [nexgenerptechnologies@gmail.com](mailto:nexgenerptechnologies@gmail.com)
+
+## Legal
+
+* [Terms of Service](TERMS_OF_SERVICE.md)
+* [Privacy Policy](PRIVACY_POLICY.md)
