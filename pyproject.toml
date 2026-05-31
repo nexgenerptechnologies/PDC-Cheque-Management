@@ -17,3 +17,8 @@ name = "pdc_cheque_management"
 
 [project.urls]
 Homepage = "https://github.com/nexgenerptechnologies/PDC-Cheque-Management"
+
+
+[tool.bench.frappe-dependencies]
+frappe = ">=15.0.0,<17.0.0"
+erpnext = ">=15.0.0,<17.0.0"
