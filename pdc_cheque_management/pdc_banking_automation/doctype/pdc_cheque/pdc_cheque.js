@@ -89,7 +89,8 @@ frappe.ui.form.on('PDC Cheque', {
                 party_type: frm.doc.party_type,
                 party: frm.doc.party,
                 company: frm.doc.company,
-                amount: frm.doc.amount
+                amount: frm.doc.amount,
+                currency: frm.doc.currency
             },
             callback: function(r) {
                 if (r.message && r.message.length > 0) {

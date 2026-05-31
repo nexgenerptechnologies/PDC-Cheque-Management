@@ -91,9 +91,20 @@ def clear_pdc(pdc_id, clearance_date):
     return {"status": "error", "message": "Cheque is not in Deposited or Issued status."}
 
 @frappe.whitelist()
-def fetch_outstanding_invoices(party_type, party, company, amount):
+def fetch_outstanding_invoices(party_type, party, company, amount, currency="INR"):
     doctype = "Sales Invoice" if party_type == "Customer" else "Purchase Invoice"
     party_field = "customer" if party_type == "Customer" else "supplier"
+
+    party_currency = frappe.db.get_value(party_type, party, "default_currency") or frappe.db.get_value("Company", company, "default_currency")
+    party_amount = flt(amount)
+    
+    if currency != party_currency:
+        try:
+            from erpnext.setup.utils import get_exchange_rate
+            rate = get_exchange_rate(currency, party_currency)
+            party_amount = flt(amount) * flt(rate)
+        except Exception:
+            pass
 
     invoices = frappe.get_all(doctype,
         filters={
@@ -106,7 +117,7 @@ def fetch_outstanding_invoices(party_type, party, company, amount):
         order_by="due_date asc"
     )
 
-    remaining_amount = flt(amount)
+    remaining_amount = party_amount
     allocation = []
 
     for inv in invoices:
