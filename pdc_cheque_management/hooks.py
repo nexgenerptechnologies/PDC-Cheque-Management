@@ -19,4 +19,5 @@ app_include_css = "/assets/pdc_cheque_management/css/pdc_style.css"
 #     }
 # }
 
-required_apps = ["erpnext"]
+required_apps = ["frappe >=15.0.0 <16.0.0", "erpnext >=15.0.0 <16.0.0"]
+
