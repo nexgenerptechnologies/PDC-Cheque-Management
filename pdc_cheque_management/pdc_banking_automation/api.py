@@ -89,6 +89,10 @@ def bulk_update_cheques(cheque_names, target_status, action_date):
         
     for name in cheque_names:
         doc = frappe.get_doc("PDC Cheque", name)
+        if not doc.party:
+            frappe.throw(f"Cheque {doc.cheque_no or doc.name} is missing a Party. Please open it and assign a Party first.")
+        if not doc.custom_invoices:
+            frappe.throw(f"Cheque {doc.cheque_no or doc.name} is missing Allocated Invoices. Please open it and allocate invoices first.")
         if target_status == "Cleared" or target_status == "Deposited":
             doc.custom_clearance_date = action_date
         elif target_status == "Bounced":
